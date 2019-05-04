@@ -149,6 +149,207 @@ public class LinkedList {
 
     }
 
+    public int count(ListNode head){
+        if (head == null){
+            return 0;
+        }
+        int count = 1;
+        ListNode cur = head;
+        while (cur.next!=null){
+            count++;
+            cur = cur.next;
+        }
+        return count;
+    }
+
+    public ListNode indexOf(int index,ListNode head){
+        int count = 0;
+        ListNode cur = head;
+        while (count!=index){
+            cur = cur.next;
+            count++;
+        }
+
+        return cur;
+    }
+
+    public ListNode remove(ListNode head, int value){
+        if (head == null){
+            return head;
+        }
+        if (head.value == value){
+            return head.next;
+        }
+        ListNode cur = head;
+        while (cur.next!=null && cur.next.value!=value){
+            cur = cur.next;
+        }
+        if (cur.next!=null){
+            cur.next = cur.next.next;
+        }
+
+        return head;
+
+    }
+
+    public ListNode insert(ListNode head, int index, int value) {
+        // Write your solution here
+        // insert at certain index
+        if (index < 0){
+            return head;
+        }
+        if (index == 0){
+            ListNode newHead = new ListNode(value);
+            newHead.next = head;
+            return newHead;
+        }
+        ListNode cur = head;
+        while (index - 1> 0 && cur.next!=null){
+            cur = cur.next;
+            index-- ;
+        }
+
+        if (index == 1){
+            ListNode newHead = new ListNode(value);
+            ListNode temp = cur.next;
+            cur.next = newHead;
+            newHead.next = temp;
+        }
+
+
+        return head;
+
+
+    }
+
+    public ListNode deleteNode(ListNode head, int index) {
+        // Write your solution here
+        if (index == 0) {
+            return head.next;
+        }
+        ListNode cur = head;
+        while (index - 1 > 0 && cur.next!=null){
+            cur = cur.next;
+            index--;
+        }
+        if (index == 1 && cur.next!=null){
+            cur.next = cur.next.next;
+        }
+
+        return head;
+    }
+
+    public ListNode deleteNodes(ListNode head, int[] indices) {
+        // Write your solution here
+        if (head == null|| indices.length == 0 || indices == null) {
+            return null;
+        }
+        ListNode newHead = new ListNode(0);
+        for (int i = 0; i < indices.length; i++){
+            if (i == 0){
+                newHead = deleteNode(head,indices[i]);
+            }
+            else {
+                newHead = deleteNode(newHead,indices[i] - i);
+            }
+        }
+        return newHead;
+
+
+    }
+
+    public ListNode removeElements(ListNode head, int val) {
+        // Write your solution here
+        if (head == null) {
+            return head;
+        }
+
+        while(head.value == val ){
+            if (head.next!=null){
+                head = head.next;
+            }else {
+                return head.next;
+            }
+
+        }
+        ListNode cur = head;
+
+        while(cur!=null&&cur.next!=null){
+            if(cur.next.value == val) {
+                cur.next = cur.next.next;
+            }else{
+                cur = cur.next;
+            }
+        }
+        return head;
+
+    }
+
+    public ListNode rotateKplace(ListNode head, int n) {
+        // Write your solution here
+        if (head == null){
+            return head;
+        }
+        ListNode cur = head;
+        ListNode pre = head;
+        int count = 1;
+        while (cur.next!=null) {
+            cur = cur.next;
+            count++;
+        }
+        int loop = n - n%count;
+        pre = cur;
+        cur.next = head;
+        cur = head;
+        while (loop > 0) {
+            cur = cur.next;
+            pre = pre.next;
+            loop--;
+        }
+        pre.next = null;
+        return cur;
+
+    }
+
+    public ListNode partition(ListNode head, int target) {
+        // Write your solution here
+        if (head == null) {
+            return null;
+        }
+        ListNode smallHead = new ListNode(0);
+        ListNode largeHead = new ListNode(0);
+        ListNode smallTail = smallHead;
+        ListNode largeTail = largeHead;
+        ListNode cur = head;
+        while (cur!=null) {
+            if (cur.value < target) {
+                smallTail.next = cur;
+                cur = cur.next;
+                smallTail = smallTail.next;
+            }
+            else {
+                largeTail.next = cur;
+                cur = cur.next;
+                largeTail = largeTail.next;
+            }
+        }
+        smallTail.next = largeHead.next;
+        return smallHead.next;
+
+    }
+
+    public ListNode reorder(ListNode head){
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode middle = middleNode(head);
+        ListNode headOne = head;
+        ListNode headTwo = reverseRecursion(middle.next);
+        middle.next = null;
+        return merge(headOne, headTwo);
+
+
+    }
 
 
 //    public ListNode partition(ListNode head, int x){
