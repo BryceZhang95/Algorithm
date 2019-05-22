@@ -1,6 +1,4 @@
-import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 
 public class Main {
 
@@ -8,7 +6,7 @@ public class Main {
         x = 10;
         return x;
     }
-    public static void main(String[] args) {
+    public static void main(StringPractice[] args) {
         int[] array = {2,3,1,6,4,8};
         int[][] matrix = {{1,2,3},{2,4,5},{6,8,9}};
         LinkedList<Integer> stack = new LinkedList<Integer>(){
@@ -24,10 +22,10 @@ public class Main {
         StackAndQueue sq = new StackAndQueue();
         sq.sort(stack);
         Sort sort = new Sort();
-        int[] result = sort.quickSort(array);
-        for (int i =0;i<result.length;i++){
-            System.out.println("result is "+result[i]);
-        }
+        MinHeap minHeap = new MinHeap(array);
+        minHeap.offer(5);
+        minHeap.update(18,0);
+        minHeap.print();
 //        ListNode node1 = new ListNode(1);
 //        ListNode node2 = new ListNode(2);
 //        ListNode node3 = new ListNode(3);
