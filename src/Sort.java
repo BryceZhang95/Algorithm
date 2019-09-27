@@ -28,6 +28,22 @@ public class Sort {
         }
     }
 
+    public int[] insertionSort(int[] array) {
+        // Write your solution here
+        if (array == null || array.length == 0) {
+            return array;
+        }
+        for (int i = 1; i < array.length; i++) {
+
+            for (int j = 0; j < i; j++) {
+                if (array[i] < array[j]) {
+                    swap(array,i,j);
+                }
+            }
+        }
+        return array;
+    }
+
     public int[] selectionSort(int[] array) {
         // Write your solution here
         // time complexity: O(n^2)
@@ -106,7 +122,7 @@ public class Sort {
         if (left < right){
             int pivot = partition(array,left,right);
             quickSort(array, left , pivot-1);
-            quickSort(array, pivot,right);
+            quickSort(array, pivot+1,right);
         }
     }
 
@@ -155,9 +171,50 @@ public class Sort {
         return array;
     }
 
+    public int[] rainbowSortIII(int[] array, int k) {
+        // Write your solution here
+        if (array == null || array.length == 0) {
+            return array;
+        }
+        rainbowSort(array,0,array.length - 1, 1, k);
+        return array;
+    }
+
+    private void rainbowSort(int[] colors,int start, int end, int colorFrom, int colorTo) {
+        if (colorFrom == colorTo) {
+            return;
+        }
+        if (start == end) {
+            return;
+        }
+
+        int colorMid = (colorFrom + colorTo) / 2;
+        int left = start, right = end;
+        while (left <= right) {
+
+            while (left <= right && colors[left] <= colorMid) {
+                left++;
+            }
+            while (left <= right && colors[right] > colorMid) {
+                right--;
+            }
+            if (left <= right) {
+                int temp = colors[left];
+                colors[left] = colors[right];
+                colors[right] = temp;
+                left++;
+                right--;
+            }
+        }
+        rainbowSort(colors, start, right, colorFrom, colorMid);
+        rainbowSort(colors, left, end, colorMid + 1, colorTo);
 
 
-    public void swap(int[] array , int i, int j){
+    }
+
+
+
+    private void swap(int[] array , int i, int j){
         int temp;
         temp = array[i];
         array[i] = array[j];

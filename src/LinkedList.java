@@ -77,32 +77,18 @@ public class LinkedList {
     }
 
     public ListNode insert(ListNode head, int value){
-        if (head == null){
-            return new ListNode(value);
-        }
-        if (value <= head.value){
-            ListNode newNode = new ListNode(value);
+        ListNode newNode = new ListNode(value);
+        if (head == null || head.value >= value) {
             newNode.next = head;
             return newNode;
         }
-        ListNode left = head;
-        ListNode right = head.next;
-        while (right!=null){
-            if (value >= left.value && value <=right.value){
-                ListNode newNode = new ListNode(value);
-                left.next = newNode;
-                newNode.next = right;
-                //return head;
-            }
-            else {
-                left = left.next;
-                right = right.next;
-            }
+        ListNode prev = head;
+        while (prev.next != null && prev.next.value < value) {
+            prev = prev.next;
         }
-        if (value >= left.value){
-            left.next = new ListNode(value);
-            //return head;
-        }
+        ListNode temp = prev.next;
+        prev.next = newNode;
+        newNode.next = temp;
         return head;
     }
 
@@ -349,6 +335,30 @@ public class LinkedList {
         return merge(headOne, headTwo);
 
 
+    }
+
+    public ListNode removeDup(ListNode head) {
+        // Write your solution here
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode prev = dummy;
+        ListNode cur = head;
+        while (cur != null && cur.next != null) {
+            if (cur.value == cur.next.value) {
+                int value = cur.value;
+                while (cur!=null && value == cur.value) {
+                    cur = cur.next;
+                }
+                prev.next = cur;
+            } else {
+                prev = cur;
+                cur = cur.next;
+            }
+        }
+        return dummy.next;
     }
 
 
