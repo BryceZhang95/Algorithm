@@ -340,6 +340,33 @@ public class StringPractice {
         reverse(input,left+1,right-1);
     }
 
+    public String reverseV(String input) {
+        // Write your solution here
+        char[] vowels = {'a','e','i','o','u'};
+        HashSet set = new HashSet();
+        for (int k = 0; k < vowels.length; k++) {
+            set.add(vowels[k]);
+        }
+        if (input == null || input.length() == 0) {
+            return input;
+        }
+        char[] array = input.toCharArray();
+        int i = 0;
+        int j = array.length - 1;
+        while(i < j) {
+            while (i < j && !set.contains(array[i])) {
+                i++;
+            }
+            while (i < j && !set.contains(array[j])) {
+                j--;
+            }
+            swap(array,i++,j--);
+        }
+        return new String(array);
+    }
+
+
+
     public int longest(String input) {
         // Write your solution here
         char[] array = input.toCharArray();
@@ -357,6 +384,7 @@ public class StringPractice {
         }
         return max;
     }
+
 
 //    public List<Integer> allAnagrams(String sh, String lo) {
 //        // Write your solution here
@@ -385,4 +413,3 @@ public class StringPractice {
 //
 //    }
 }
-
